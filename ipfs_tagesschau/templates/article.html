@@ -1,0 +1,29 @@
+<!-- Template for an article on tagesschau.de -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style type="text/css">
+        html {
+            columns: 800px 1;
+            max-width: 1000px;
+            margin: 100;
+        }
+    </style>
+    <title>{{ title }} feed</title>
+</head>
+
+<body>
+    <h2>
+        {{ heading }}
+    </h2>
+
+    {{ time }}
+
+    {% for paragraph in text %}
+    {{ paragraph }}
+    {% endfor %}
+</body>
+
+</html>

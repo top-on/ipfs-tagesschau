@@ -8,6 +8,11 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.9"
 pip = "^22.0"
 Jinja2 = "^3.1.2"
+requests = "^2.28.0"
+bs4 = "^0.0.1"
+urlpath = "^1.2.0"
+lxml = "^4.9.0"
+pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
