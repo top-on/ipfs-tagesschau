@@ -3,7 +3,6 @@
 from bs4 import BeautifulSoup
 from urlpath import URL
 
-from ipfs_tagesschau.config import ARTICLE_BLOCKLIST
 from ipfs_tagesschau.schema import Article, ArticleSummary
 
 
@@ -44,7 +43,7 @@ def parse_feed(page_source: str) -> list[ArticleSummary]:
         article
         for article in articles
         if (
-            article.url not in ARTICLE_BLOCKLIST
+            str(article.url).endswith(".html")
             and str(article.url).startswith("https://www.tagesschau.de")
         )
     ]
