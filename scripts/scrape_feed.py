@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 from urlpath import URL
 from pytz import timezone
+from pathlib import Path
 
 from ipfs_tagesschau.config import OUT_DIR
 from ipfs_tagesschau.io import download_page_source, save_rendering
@@ -15,11 +16,22 @@ from ipfs_tagesschau.render import render_article, render_feed
 timestamp = datetime.now(tz=timezone("Europe/Berlin")).isoformat()
 OUT_DIR.mkdir(exist_ok=True)
 
+
 # RENDER FEED
 page_source = download_page_source(url=URL("https://www.tagesschau.de/xml/atom/"))
 summaries = parse_feed(page_source=page_source)
 rendering = render_feed(articles=summaries)
 save_rendering(rendering=rendering, filepath=OUT_DIR / "index.html")
+
+
+# DELETE UNLINKED ARTICLES FROM CACHE
+files_cached: list[Path] = {path for path in OUT_DIR.glob("**/*")}
+files_linked: list[Path] = {OUT_DIR / summary.url.name for summary in summaries}
+files_unlinked: list[Path] = files_cached - files_linked - {OUT_DIR / "index.html"}
+
+for file in files_unlinked:
+    file.unlink()
+
 
 # DOWNLOAD ARTICLES
 for i, article_summary in enumerate(summaries):
